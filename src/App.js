@@ -11,7 +11,7 @@ import withStyles from '@mui/styles/withStyles';
 
 const styles = () => ({
     statistic: {
-        paddingTop: '450px',
+        paddingTop: '32px',
     }
 })
 
@@ -20,6 +20,7 @@ const App = (props) => {
     const [value, setValue] = useState('1');
     const [objectData, setObjectData] = useState([]);
     const [openStatistic, setOpenStatistic] = useState(false);
+    const [imgSrc, setImgSrc] = useState([]);
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
@@ -43,6 +44,8 @@ const App = (props) => {
                                     setObjectData={setObjectData}
                                     objectData={objectData}
                                     setOpenStatistic={() => setOpenStatistic(!openStatistic)}
+                                    setImgSrc={setImgSrc}
+                                    imgSrc={imgSrc}
                                 />
                             </TabPanel>
                             <TabPanel value="2">Item Two</TabPanel>

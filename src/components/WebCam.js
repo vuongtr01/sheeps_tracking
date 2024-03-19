@@ -7,6 +7,7 @@ import DrawRect from "./helpers/DrawRect";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import withStyles from '@mui/styles/withStyles';
+import ImageDisplay from "./ImageDisplay";
 
 const styles = () => ({
     webcam: {
@@ -29,11 +30,19 @@ const styles = () => ({
     },
     cameraContainer: {
         position: "relative",
-    }
+    },
+    actionButton: {
+        paddingBottom: '16px',
+    },
+    webcamContainer: {
+        position: "relative",
+    },
 });
 
 const WebCam = (props) => {
-    const { classes, setObjectData, setOpenStatistic } = props;
+    const {
+        classes, setObjectData, setOpenStatistic, setImgSrc, imgSrc,
+    } = props;
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
     const [openCamera, setOpenCamera] = useState(false);
@@ -41,6 +50,7 @@ const WebCam = (props) => {
         setOpenCamera(!openCamera);
         setOpenStatistic();
         setObjectData([]);
+        setImgSrc([]);
     }
     const runCoco = async () => {
     const net = await cocossd.load();
@@ -48,6 +58,10 @@ const WebCam = (props) => {
         detect(net);
     }, 1000);
     };
+    const capture = React.useCallback(() => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        setImgSrc([...imgSrc, imageSrc ] )
+      }, [webcamRef, setImgSrc, imgSrc]);
 
     const detect = async (net) => {
     if (
@@ -84,16 +98,20 @@ const WebCam = (props) => {
     <Grid container direction="column">
         {openCamera ? (
         <Grid container>
-            <Grid item xs={4}>
-                <Button variant="contained" onClick={handleClickCamera}>Stop Camera</Button>
+            <Grid item xs={2} container direction="column">
+                <Grid item className={classes.actionButton}>
+                    <Button variant="contained" onClick={handleClickCamera}>Stop Camera</Button>
+                </Grid>
+                <Grid item className={classes.actionButton}>
+                    <Button variant="contained" onClick={capture}>Capture Picture</Button>
+                </Grid>
             </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7} className={classes.webcamContainer}>
                 <>
                     <Webcam
                         ref={webcamRef}
                         muted={true}
+                        screenshotFormat="image/jpeg"
                         className={classes.webcam}
                     />
 
@@ -102,6 +120,9 @@ const WebCam = (props) => {
                         className={classes.canvas}
                     />
                 </>
+            </Grid>
+            <Grid item xs={3}>
+                <ImageDisplay data={imgSrc}/>
             </Grid>
         </Grid>
         ) : (
