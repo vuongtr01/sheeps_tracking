@@ -1802,6 +1802,13 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.15.13.tgz#f753bec8994b5defe4f62832a8a9ed14b5cb2d16"
   integrity sha512-ERsk9EWpiitSiKnmUdFJGshtFk647l4p7r+mjRWe/F1l5kT1NTTKkaeDLcK3/lsy0udXjMgcG0bNwzbYBdDdhQ==
 
+"@mui/icons-material@^5.15.14":
+  version "5.15.14"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.15.14.tgz#333468c94988d96203946d1cfeb8f4d7e8e7de34"
+  integrity sha512-vj/51k7MdFmt+XVw94sl30SCvGx6+wJLsNYjZRgxhS6y3UtnWnypMOsm3Kmg8TN+P0dqwsjy4/fX7B1HufJIhw==
+  dependencies:
+    "@babel/runtime" "^7.23.9"
+
 "@mui/lab@^5.0.0-alpha.168":
   version "5.0.0-alpha.168"
   resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.168.tgz#9d9f60aec49adc9dc24d6bb2e7ad5c3ea2c6e7e4"
@@ -5147,6 +5154,11 @@ file-loader@^6.2.0:
   dependencies:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
+
+file-saver@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
+  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
 
 filelist@^1.0.4:
   version "1.0.4"

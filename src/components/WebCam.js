@@ -52,6 +52,10 @@ const WebCam = (props) => {
         setObjectData([]);
         setImgSrc([]);
     }
+    const deleteImage = (imgId) => {
+        const newImgList = imgSrc.filter(img => img.id !== imgId);
+        setImgSrc(newImgList);
+    }
     const runCoco = async () => {
     const net = await cocossd.load();
     setInterval(() => {
@@ -60,7 +64,13 @@ const WebCam = (props) => {
     };
     const capture = React.useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setImgSrc([...imgSrc, imageSrc ] )
+        setImgSrc([
+            ...imgSrc,
+            {
+                id: `img-${Math.random() * 100000000}`,
+                src: imageSrc,
+            }
+        ])
       }, [webcamRef, setImgSrc, imgSrc]);
 
     const detect = async (net) => {
@@ -122,7 +132,7 @@ const WebCam = (props) => {
                 </>
             </Grid>
             <Grid item xs={3}>
-                <ImageDisplay data={imgSrc}/>
+                <ImageDisplay data={imgSrc} deleteImage={deleteImage} />
             </Grid>
         </Grid>
         ) : (

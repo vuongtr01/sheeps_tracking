@@ -19,7 +19,6 @@ const Statistic = (props) => {
           formatedData[className] = 1;
         }
     });
-    console.log(Object.keys(formatedData));
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
