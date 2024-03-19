@@ -33,41 +33,38 @@ const styles = () => ({
 });
 
 const WebCam = (props) => {
-    const { classes } = props;
+    const { classes, setObjectData, setOpenStatistic } = props;
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
     const [openCamera, setOpenCamera] = useState(false);
-    const handleClickCamera = () => setOpenCamera(!openCamera);
-    // Main function
+    const handleClickCamera = () => {
+        setOpenCamera(!openCamera);
+        setOpenStatistic();
+        setObjectData([]);
+    }
     const runCoco = async () => {
     const net = await cocossd.load();
-    console.log("Handpose model loaded.");
-    //  Loop and detect hands
     setInterval(() => {
         detect(net);
     }, 1000);
     };
 
     const detect = async (net) => {
-    // Check data is available
     if (
         typeof webcamRef.current !== "undefined" &&
         webcamRef.current !== null &&
         webcamRef.current.video.readyState === 4
     ) {
-        // Get Video Properties
         const video = webcamRef.current.video;
         const videoWidth = video.videoWidth;
         const videoHeight = video.videoHeight;
 
-        // Set canvas height and width
         canvasRef.current.width = videoWidth;
         canvasRef.current.height = videoHeight;
 
-        // Make Detections
         const obj = await net.detect(video);
+        setObjectData(obj);
 
-        // Draw mesh
         const ctx = canvasRef.current.getContext("2d");
         const canvasInfo = {
             top: canvasRef.current.getBoundingClientRect().top,
