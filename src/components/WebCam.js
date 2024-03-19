@@ -1,9 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import '@tensorflow/tfjs-backend-cpu';
 import '@tensorflow/tfjs-backend-webgl';
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import DrawRect from "./helpers/DrawRect";
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import withStyles from '@mui/styles/withStyles';
 
 const styles = () => ({
@@ -15,8 +17,6 @@ const styles = () => ({
         right: 0,
         textAlign: "center",
         zindex: 9,
-        width: "100vw",
-        height: "100vh"
     },
     canvas: {
         position: "absolute",
@@ -26,8 +26,9 @@ const styles = () => ({
         right: 0,
         textAlign: "center",
         zindex: 8,
-        width: "100vw",
-        height: "100vh"
+    },
+    cameraContainer: {
+        position: "relative",
     }
 });
 
@@ -35,7 +36,8 @@ const WebCam = (props) => {
     const { classes } = props;
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
-
+    const [openCamera, setOpenCamera] = useState(false);
+    const handleClickCamera = () => setOpenCamera(!openCamera);
     // Main function
     const runCoco = async () => {
     const net = await cocossd.load();
@@ -43,7 +45,7 @@ const WebCam = (props) => {
     //  Loop and detect hands
     setInterval(() => {
         detect(net);
-    }, 10);
+    }, 1000);
     };
 
     const detect = async (net) => {
@@ -55,12 +57,8 @@ const WebCam = (props) => {
     ) {
         // Get Video Properties
         const video = webcamRef.current.video;
-        const videoWidth = webcamRef.current.video.videoWidth;
-        const videoHeight = webcamRef.current.video.videoHeight;
-
-        // Set video width
-        webcamRef.current.video.width = videoWidth;
-        webcamRef.current.video.height = videoHeight;
+        const videoWidth = video.videoWidth;
+        const videoHeight = video.videoHeight;
 
         // Set canvas height and width
         canvasRef.current.width = videoWidth;
@@ -71,7 +69,13 @@ const WebCam = (props) => {
 
         // Draw mesh
         const ctx = canvasRef.current.getContext("2d");
-        DrawRect(obj, ctx);
+        const canvasInfo = {
+            top: canvasRef.current.getBoundingClientRect().top,
+            left: canvasRef.current.getBoundingClientRect().left,
+            right: canvasRef.current.getBoundingClientRect().right,
+            bottom: canvasRef.current.getBoundingClientRect().bottom,
+        }
+        DrawRect(obj, ctx, canvasInfo);
     }
     };
 
@@ -80,18 +84,35 @@ const WebCam = (props) => {
     }, []);
 
     return (
-    <div className="container">
-        <Webcam
-        ref={webcamRef}
-        muted={true}
-        className={classes.webcam}
-        />
+    <Grid container direction="column">
+        {openCamera ? (
+        <Grid container>
+            <Grid item xs={4}>
+                <Button variant="contained" onClick={handleClickCamera}>Stop Camera</Button>
+            </Grid>
+            <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={6}>
+                <>
+                    <Webcam
+                        ref={webcamRef}
+                        muted={true}
+                        className={classes.webcam}
+                    />
 
-        <canvas
-        ref={canvasRef}
-        className={classes.canvas}
-        />
-    </div>
+                    <canvas
+                        ref={canvasRef}
+                        className={classes.canvas}
+                    />
+                </>
+            </Grid>
+        </Grid>
+        ) : (
+            <Grid item>
+                <Button variant="contained" onClick={handleClickCamera}>Open Camera</Button>
+            </Grid>
+        )}
+    </Grid>
     );
 }
 
