@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React  from "react";
+import WebCam from "./components/WebCam";
+import Grid from '@mui/material/Grid';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Grid container>
+        <Grid item xs={3} />
+        <Grid item xs={6}>
+            <Grid container direction="column">
+                <Grid item />
+                <Grid item>
+                    <WebCam />
+                </Grid>
+                <Grid item />
+            </Grid>
+        </Grid>
+        <Grid item xs={3} />
+    </Grid>
+  )
 }
 
 export default App;
