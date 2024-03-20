@@ -3,7 +3,7 @@
 Monitoring Farm Sheep Movement with Deep Learning and Object Tracking
 
 ## Team Members
-**Advisor: ** Dr. Do Thuy
+**Advisor:** Dr. Do Thuy
 1. Adam Koller (Team Lead)
 2. Emma Tran
 3. Luc Vuong
@@ -36,7 +36,7 @@ yarn --version
 
 1. Clone git repo to your local machine
 ```
-git clone
+git clone https://github.com/vuongtr01/sheeps_tracking.git
 ```
 
 2. Move to the project directory
