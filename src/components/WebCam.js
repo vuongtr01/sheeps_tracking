@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import '@tensorflow/tfjs-backend-cpu';
 import '@tensorflow/tfjs-backend-webgl';
 import * as cocossd from "@tensorflow-models/coco-ssd";
@@ -57,12 +57,12 @@ const WebCam = (props) => {
         setImgSrc(newImgList);
     }
     const runCoco = async () => {
-    const net = await cocossd.load();
-    setInterval(() => {
-        detect(net);
-    }, 1000);
+        const net = await cocossd.load();
+        setInterval(() => {
+            detect(net);
+        }, 1000);
     };
-    const capture = React.useCallback(() => {
+    const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImgSrc([
             ...imgSrc,
@@ -74,34 +74,34 @@ const WebCam = (props) => {
       }, [webcamRef, setImgSrc, imgSrc]);
 
     const detect = async (net) => {
-    if (
-        typeof webcamRef.current !== "undefined" &&
-        webcamRef.current !== null &&
-        webcamRef.current.video.readyState === 4
-    ) {
-        const video = webcamRef.current.video;
-        const videoWidth = video.videoWidth;
-        const videoHeight = video.videoHeight;
+        if (
+            typeof webcamRef.current !== "undefined" &&
+            webcamRef.current !== null &&
+            webcamRef.current.video.readyState === 4
+        ) {
+            const video = webcamRef.current.video;
+            const videoWidth = video.videoWidth;
+            const videoHeight = video.videoHeight;
 
-        canvasRef.current.width = videoWidth;
-        canvasRef.current.height = videoHeight;
+            canvasRef.current.width = videoWidth;
+            canvasRef.current.height = videoHeight;
 
-        const obj = await net.detect(video);
-        setObjectData(obj);
+            const obj = await net.detect(video);
+            setObjectData(obj);
 
-        const ctx = canvasRef.current.getContext("2d");
-        const canvasInfo = {
-            top: canvasRef.current.getBoundingClientRect().top,
-            left: canvasRef.current.getBoundingClientRect().left,
-            right: canvasRef.current.getBoundingClientRect().right,
-            bottom: canvasRef.current.getBoundingClientRect().bottom,
+            const ctx = canvasRef.current.getContext("2d");
+            const canvasInfo = {
+                top: canvasRef.current.getBoundingClientRect().top,
+                left: canvasRef.current.getBoundingClientRect().left,
+                right: canvasRef.current.getBoundingClientRect().right,
+                bottom: canvasRef.current.getBoundingClientRect().bottom,
+            }
+            DrawRect(obj, ctx, canvasInfo);
         }
-        DrawRect(obj, ctx, canvasInfo);
-    }
     };
 
     useEffect(() => {
-    runCoco();
+        runCoco();
     }, []);
 
     return (

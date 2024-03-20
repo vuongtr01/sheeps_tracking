@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import WebCam from "./components/WebCam";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Statistic from "./components/Statistic";
 import withStyles from '@mui/styles/withStyles';
+import VideoInput from "./components/VideoInput";
+import WebCam from "./components/WebCam";
+import Statistic from "./components/Statistic";
 
 const styles = () => ({
     statistic: {
@@ -30,7 +31,7 @@ const App = (props) => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Webcam" value="1" />
-                    <Tab label="Item Two" value="2" />
+                    <Tab label="Video Input" value="2" />
                     <Tab label="Item Three" value="3" />
                 </TabList>
             </Box>
@@ -48,7 +49,9 @@ const App = (props) => {
                                     imgSrc={imgSrc}
                                 />
                             </TabPanel>
-                            <TabPanel value="2">Item Two</TabPanel>
+                            <TabPanel value="2">
+                                <VideoInput setObjectData={setObjectData} />
+                            </TabPanel>
                             <TabPanel value="3">Item Three</TabPanel>
                         </Grid>
                         <Grid item />
