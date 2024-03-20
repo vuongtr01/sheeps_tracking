@@ -32,7 +32,6 @@ const App = (props) => {
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Webcam" value="1" />
                     <Tab label="Video Input" value="2" />
-                    <Tab label="Item Three" value="3" />
                 </TabList>
             </Box>
             <Grid container direction="column">
@@ -50,9 +49,12 @@ const App = (props) => {
                                 />
                             </TabPanel>
                             <TabPanel value="2">
-                                <VideoInput setObjectData={setObjectData} />
+                                <VideoInput
+                                    setObjectData={setObjectData}
+                                    objectData={objectData}
+                                    setOpenStatistic={() => setOpenStatistic(!openStatistic)}
+                                />
                             </TabPanel>
-                            <TabPanel value="3">Item Three</TabPanel>
                         </Grid>
                         <Grid item />
                     </Grid>

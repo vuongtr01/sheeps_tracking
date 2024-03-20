@@ -41,6 +41,9 @@ const styles = () => ({
     webcamContainer: {
         position: "relative",
     },
+    div: {
+        height: '500px',
+    }
 });
 
 const VisuallyHiddenInput = styled('input')({
@@ -58,7 +61,7 @@ const VisuallyHiddenInput = styled('input')({
 
 const VideoInput = (props) => {
     const {
-        classes, setObjectData,
+        classes, setObjectData, setOpenStatistic,
     } = props;
     console.log(setObjectData);
     const videoRef = useRef(null);
@@ -73,6 +76,8 @@ const VideoInput = (props) => {
     };
     const handleClickVideo = () => {
         setOpenVideo(!openVideo);
+        setOpenStatistic();
+        setObjectData([]);
     }
     const handleUpload = (event) => {
         const file = event.target.files[0];
@@ -84,6 +89,8 @@ const VideoInput = (props) => {
             videoRef.current.play();
         }
         setOpenVideo(true);
+        setOpenStatistic();
+        setObjectData([]);
     };
     
     const detect = async (net) => {
@@ -100,6 +107,7 @@ const VideoInput = (props) => {
             canvasRef.current.height = videoHeight;
 
             const obj = await net.detect(video);
+            console.log(obj);
             setObjectData(obj);
 
             const ctx = canvasRef.current.getContext("2d");
@@ -149,6 +157,7 @@ const VideoInput = (props) => {
                         ref={canvasRef}
                         className={classes.canvas}
                     />
+                    <div className={classes.div} />
                 </>
             </Grid>
         </Grid>
