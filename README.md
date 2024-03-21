@@ -36,6 +36,7 @@ yarn --version
 
 1. Clone git repo to your local machine
 ```
+cd path_to_location_you_want_to_store_the_project_in_your_local_machine
 git clone https://github.com/vuongtr01/sheeps_tracking.git
 ```
 
