@@ -4,6 +4,7 @@ class SheepStatistic:
     def __init__(self) -> None:
         self.__sheep_coordinate = {}
         self.__sheep_move_by_time = []
+        self.__sheep_distance_moved = {}
         self.__myDistance_calculator = DistanceCalculation()
         
     def update_coordinate(self, sheep_id, new_coordinate):
@@ -38,7 +39,19 @@ class SheepStatistic:
         for k, value in self.__sheep_coordinate.items():
             new_statistic[k] = value['distance_move']
         return new_statistic
+    
+    def update_statistic(self, id, distance):
+        if id not in self.__sheep_distance_moved:
+            self.__sheep_distance_moved[id] = 0
+        else:
+            self.__sheep_distance_moved[id] += distance
+            
+    def get_statistic(self):
+        return self.__sheep_distance_moved
 
+    def get_current_statistic(self):
+        return self.__sheep_distance_moved
     def reset(self):
         self.__sheep_coordinate = {}
         self.__sheep_move_by_time = []
+        self.__sheep_distance_moved = {}
