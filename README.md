@@ -86,6 +86,7 @@ flask run
 ```
 
 2. Start front end server
+
 Open another terminal
 ```
 cd front_end
