@@ -19,7 +19,7 @@ const styles = () => ({
 const App = (props) => {
     const { classes } = props;
     const [value, setValue] = useState('1');
-    const [objectData, setObjectData] = useState([]);
+    const [objectData, setObjectData] = useState({});
     const [openStatistic, setOpenStatistic] = useState(false);
     const [imgSrc, setImgSrc] = useState([]);
     const handleChange = (_, newValue) => {

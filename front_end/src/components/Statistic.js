@@ -9,35 +9,25 @@ import Paper from '@mui/material/Paper';
 
 const Statistic = (props) => {
     const { data } = props;
-    const formatedData = {};
-    data.forEach(detection => {
-        const className = detection.class;
-
-        if (formatedData[className]) {
-          formatedData[className]++;
-        } else {
-          formatedData[className] = 1;
-        }
-    });
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: 250 }}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Object Type</TableCell>
-                        <TableCell align="right">Count</TableCell>
+                        <TableCell>Sheep ID</TableCell>
+                        <TableCell align="right">Distance moved</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {Object.keys(formatedData).map((row) => (
+                    {Object.keys(data).map((row) => (
                         <TableRow
                             key={`object-${Math.random() * 1000000000}`}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                         <TableCell component="th" scope="row">
-                            {row}
+                            {parseInt(row) + 1}
                         </TableCell>
-                        <TableCell align="right">{formatedData[row]}</TableCell>
+                        <TableCell align="right">{data[row]}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

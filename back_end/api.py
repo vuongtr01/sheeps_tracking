@@ -1,5 +1,5 @@
 import time
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
 import ultralytics
@@ -7,14 +7,20 @@ from ultralytics import YOLO
 from distance_calculation import DistanceCalculation
 from sheep_statistic import SheepStatistic
 import time
+import os
 
 app = Flask(__name__)
 CORS(app)
 my_statistic = SheepStatistic()
 
-@app.route('/time')
-def get_current_time():
-    video = cv2.VideoCapture('sheeps_30sec.mp4')
+@app.route('/upload_video', methods=['POST'])
+def tracking():
+    print(request.files)
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+
+    video = cv2.VideoCapture(file.filename) 
     model = YOLO('best.pt')
     start_time = time.time()
     while True:
@@ -33,5 +39,9 @@ def get_current_time():
             my_statistic.update_statistic()
             start_time = current_time  # Reset the start ti
         
-    print(my_statistic.get_moved_distance())
-    return {'time': time.time()}
+    my_statistic.reset()
+    return  jsonify({'statistic_data': my_statistic.get_moved_distance()}), 200
+
+@app.route('/get_current_statistic')
+def get_current_statistic():
+    return  jsonify({'statistic_data': my_statistic.get_current_moved_distance()}), 200

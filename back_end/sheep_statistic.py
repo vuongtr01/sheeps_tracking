@@ -32,3 +32,13 @@ class SheepStatistic:
     
     def get_moved_distance(self):
         return self.__sheep_move_by_time
+    
+    def get_current_moved_distance(self):
+        new_statistic = {}
+        for k, value in self.__sheep_coordinate.items():
+            new_statistic[k] = value['distance_move']
+        return new_statistic
+
+    def reset(self):
+        self.__sheep_coordinate = {}
+        self.__sheep_move_by_time = []
