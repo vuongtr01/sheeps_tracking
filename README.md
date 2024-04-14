@@ -32,6 +32,9 @@ Check Yarn version
 yarn --version
 ```
 
+### Install Python
+[https://www.python.org/downloads/](https://www.python.org/downloads/)
+
 ## Setup Development Environment
 
 1. Clone git repo to your local machine
@@ -45,12 +48,45 @@ git clone https://github.com/vuongtr01/sheeps_tracking.git
 cd path_to_project_in_your_local_machine
 ```
 
-3. Install dependencies
+3. Install Front End dependencies
 ```
+cd front_end
 yarn install
 ```
 
+4. Install Back End virtual environment and dependencies
+
+Install virtualenv library
+```
+pip3 install virtualenv
+```
+Create virtual environment
+```
+python3 -m venv venv
+```
+Activate virtual environment
+```
+source venv/bin/activate 
+```
+Install dependencies
+```
+pip3 install -r requirements.txt
+```
+
+Deactivate virtual environment
+```
+deactivate
+```
 ## Runs the app in the development mode
+1. Start back end server
+Open a terminal:
+```
+cd back_end
+flask run
+```
+
+2. Start front end server
+Open another terminal
 ```
 yarn start
 ```
