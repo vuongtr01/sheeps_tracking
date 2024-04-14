@@ -79,6 +79,7 @@ deactivate
 ```
 ## Runs the app in the development mode
 1. Start back end server
+
 Open a terminal:
 ```
 cd back_end
