@@ -120,10 +120,16 @@ const VideoInput = (props) => {
                 </video>
             </Grid>
             {isTracking && (
-                <Grid item xs={3} className={classes.webcamContainer}>
-                    <Typography variant="h4" gutterBottom>
-                        Is Tracking
-                    </Typography>
+                <Grid item container xs={3} direction="column">
+                    <Grid item className={classes.webcamContainer}>
+                        <Typography variant="h4" gutterBottom>
+                            Waitt!!! It Is Tracking
+                        </Typography>
+                    </Grid>
+                    <Grid item className={classes.webcamContainer}>
+                        <iframe src="https://giphy.com/embed/uDSINeWxPIkLFscqKF" width="200" height="200" frameBorder="0" class="giphy-embed" allowFullScreen>
+                        </iframe>
+                    </Grid>
                 </Grid>
             )}
         </Grid>

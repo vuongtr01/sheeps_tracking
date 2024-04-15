@@ -25,7 +25,7 @@ const Statistic = (props) => {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                         <TableCell component="th" scope="row">
-                            {parseInt(row) + 1}
+                            {parseInt(row)}
                         </TableCell>
                         <TableCell align="right">{data[row]}</TableCell>
                         </TableRow>
