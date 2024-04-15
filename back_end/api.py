@@ -27,7 +27,6 @@ def tracking():
     prev_frame_predictions = {}
 
     for frame_number in range(1, total_frames):
-        print("frame: {}".format(frame_number))
         video.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
 
         _, original_next_frame = video.read()
@@ -63,7 +62,6 @@ def tracking():
         }
 
         if lost_tracks_next and lost_tracks_prev:
-            print("runing resolve lost track")
             prev_id_to_next_id = resolve_lost_tracks(lost_tracks_prev, lost_tracks_next)
             for prev_id, next_id in prev_id_to_next_id.items():
                 next_frame_predictions[prev_id] = next_frame_predictions.pop(next_id)
@@ -73,15 +71,12 @@ def tracking():
                 set(prev_frame_predictions.keys())
             )
         ):
-            print('running update')
             if id not in my_statistic.get_current_statistic():
                 my_statistic.update_statistic(id, 0)
             else:
                 my_statistic.update_statistic(id, distance_calculator.cal_distance(
                     prev_frame_predictions[id], next_frame_predictions[id]
                 ))
-        print(next_frame_predictions)
-        print('end frame')
         prev_frame_predictions = next_frame_predictions
     my_statistic.reset()
     return  jsonify({'statistic_data': my_statistic.get_moved_distance()}), 200

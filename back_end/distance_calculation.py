@@ -51,7 +51,6 @@ class DistanceCalculation:
       # self.x_multiplier = self.sheep_length * np.cos(np.arctan(pixel_width/pixel_height))
       self.x_multiplier = self.sheep_length * sheep_pixel_width/np.sqrt(sheep_pixel_height**2+sheep_pixel_width**2)
 
-      # self.y_multiplier = self.sheep_length * np.sin(np.arctan(pixel_width/pixel_height))
       self.y_multiplier = self.sheep_length * sheep_pixel_height/np.sqrt(sheep_pixel_height**2+sheep_pixel_width**2)
 
   def delta_x(self, delta_px):
@@ -69,7 +68,6 @@ class DistanceCalculation:
     delta_y = cosb * (delta_py/self.sheep_pixel_height) * self.y_multiplier
     return delta_y
 
-  # def cal_coordinates(self, px_top, py_top, px_bot, py_bot):
   def find_center(self, px_top, py_top, px_bot, py_bot):
     """
     return the coordinates (x,y) of the center of the bounding box
@@ -86,20 +84,14 @@ class DistanceCalculation:
     whether top-left corner or bottom-left corner is the origin point does not matter.
     the algorithm works either case
     """
-    # find the center of each frame
+
     x1, y1 = self.find_center(p_rep1[0], p_rep1[1], p_rep1[2], p_rep1[3])
     x2, y2 = self.find_center(p_rep2[0], p_rep2[1], p_rep2[2], p_rep2[3])
 
 
-    # how much real (PHYSICAL) distance the sheep is perceived to have moved vertically & horizontally, with respect to the avg size of a sheep
     self.find_orientation(p_rep2[0], p_rep2[1], p_rep2[2], p_rep2[3])
 
     dx = self.delta_x(abs(x1-x2))
     dy = self.delta_y(abs(y1-y2))
-
-    # print("\nx_mul\n", self.x_multiplier)
-    # print("\ny_mul\n", self.y_multiplier)
-
-    #return the (physical) distance object has moved between frame1 and frame2
 
     return np.sqrt(dx**2 + dy**2)
