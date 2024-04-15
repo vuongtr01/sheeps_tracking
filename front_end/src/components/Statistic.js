@@ -15,7 +15,7 @@ const Statistic = (props) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Sheep ID</TableCell>
-                        <TableCell align="right">Distance moved</TableCell>
+                        <TableCell align="right">Distance moved(meters)</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
