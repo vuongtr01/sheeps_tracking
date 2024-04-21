@@ -6,8 +6,9 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import withStyles from '@mui/styles/withStyles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Typography from '@mui/material/Typography';
+import Statistic from "./Statistic";
 import axios from 'axios';
+import { image } from "@tensorflow/tfjs";
 
 const styles = () => ({
     video: {
@@ -22,6 +23,10 @@ const styles = () => ({
     },
     div: {
         height: '500px',
+    },
+    imageBody: {
+        marginTop: '30px !important',
+        marginBottom: '16px !important'
     }
 });
 
@@ -40,7 +45,7 @@ const VisuallyHiddenInput = styled('input')({
 
 const VideoInput = (props) => {
     const {
-        classes, setObjectData, setOpenStatistic,
+        classes, setObjectData, setOpenStatistic, objectData
     } = props;
     const [isTracking, setIsTracking] = useState(false);
     const videoRef = useRef(null);
@@ -94,57 +99,51 @@ const VideoInput = (props) => {
     return (
     <Grid container direction="column">
         {openVideo ? (
-        <Grid container>
-            <Grid item xs={2} container direction="column">
-                <Grid item className={classes.actionButton}>
-                    {openVideo ? (
-                        <Button disabled={isTracking} variant="contained" onClick={handleClickVideo}>Stop Video</Button>
-                    ) : (
-                        <Button
+        <Grid container justifyContent="center" alignItems="center">
+            <Grid item container direction="column" xs={7} className={classes.webcamContainer}>
+                <Grid item>
+                    <video ref={videoRef} muted={true} controls autoPlay className={classes.video}>
+                        <source src={videoSrc} type="video/mp4" />
+                    </video>
+                </Grid>
+                <Grid item>
+                    <Button disabled={isTracking} variant="contained" onClick={handleClickVideo}>Stop Video</Button>
+                </Grid>
+            </Grid>
+            <Grid item>
+                <Statistic data={objectData}/>
+            </Grid>
+        </Grid>
+        ) : (
+            <Grid item container direction="column" justifyContent="center" alignItems="center">
+                <Grid item className={classes.imageBody}>
+                    <img
+                        src="/temp_img.jpg"
+                        alt="logoimage"
+                        width='200'
+                        height='200'
+                    />
+                </Grid>
+                <Grid item>
+                    <Button
                         component="label"
                         role={undefined}
                         variant="contained"
                         tabIndex={-1}
                         startIcon={<CloudUploadIcon />}
-                        >
-                            Upload file
-                            <VisuallyHiddenInput type="file" accept="video/*" onChange={handleUpload}/>
-                        </Button>
-                    )}
-                    
+                    >
+                        Upload file
+                        <VisuallyHiddenInput type="file" accept="video/*" onChange={handleUpload}/>
+                    </Button>
                 </Grid>
-            </Grid>
-            <Grid item xs={7} className={classes.webcamContainer}>
-                <video ref={videoRef} muted={true} controls autoPlay className={classes.video}>
-                    <source src={videoSrc} type="video/mp4" />
-                </video>
-            </Grid>
-            {isTracking && (
-                <Grid item container xs={3} direction="column">
-                    <Grid item className={classes.webcamContainer}>
-                        <Typography variant="h4" gutterBottom>
-                            Waitt!!! It Is Tracking
-                        </Typography>
-                    </Grid>
-                    <Grid item className={classes.webcamContainer}>
-                        <iframe src="https://giphy.com/embed/uDSINeWxPIkLFscqKF" width="200" height="200" frameBorder="0" class="giphy-embed" allowFullScreen>
-                        </iframe>
-                    </Grid>
+                <Grid item className={classes.imageBody}>
+                    <img
+                        src="/word.png"
+                        alt="logoimage"
+                        width='200'
+                        height='100'
+                    />
                 </Grid>
-            )}
-        </Grid>
-        ) : (
-            <Grid item>
-                <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
-                >
-                    Upload file
-                    <VisuallyHiddenInput type="file" accept="video/*" onChange={handleUpload}/>
-                </Button>
             </Grid>
         )}
     </Grid>

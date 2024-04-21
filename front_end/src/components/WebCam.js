@@ -37,6 +37,10 @@ const styles = () => ({
     webcamContainer: {
         position: "relative",
     },
+    imageBody: {
+        marginTop: '30px !important',
+        marginBottom: '16px !important'
+    }
 });
 
 const WebCam = (props) => {
@@ -136,9 +140,29 @@ const WebCam = (props) => {
             </Grid>
         </Grid>
         ) : (
-            <Grid item>
-                <Button variant="contained" onClick={handleClickCamera}>Open Camera</Button>
+            <Grid item container direction="column" justifyContent="center" alignItems="center">
+            <Grid item className={classes.imageBody}>
+                <img
+                    src="/temp_img.jpg"
+                    alt="logoimage"
+                    width='200'
+                    height='200'
+                />
             </Grid>
+            <Grid item>
+                <Grid item>
+                    <Button variant="contained" onClick={handleClickCamera}>Open Camera</Button>
+                </Grid>
+            </Grid>
+            <Grid item className={classes.imageBody}>
+                <img
+                    src="/word.png"
+                    alt="logoimage"
+                    width='200'
+                    height='100'
+                />
+            </Grid>
+        </Grid>
         )}
     </Grid>
     );

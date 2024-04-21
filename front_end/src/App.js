@@ -24,15 +24,29 @@ const App = (props) => {
     const [imgSrc, setImgSrc] = useState([]);
     const handleChange = (_, newValue) => {
         setValue(newValue);
+        setOpenStatistic(false);
     };
     return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
+    <Box sx={{width: '100%', typography: 'body1' }}>
         <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Webcam" value="1" />
-                    <Tab label="Video Input" value="2" />
-                </TabList>
+                <Grid container>
+                    <Grid item xs={3}>
+                        <img
+                            src="/temp_img.jpg"
+                            alt="logoimage"
+                            width='100'
+                            height='50'
+                        />
+                    </Grid>
+                    <Grid item xs={2}/>
+                    <Grid item xs={3}>
+                        <TabList onChange={handleChange} aria-label="lab API tabs example">
+                            <Tab label="Webcam" value="1" />
+                            <Tab label="Video Input" value="2" />
+                        </TabList>
+                    </Grid>  
+                </Grid>
             </Box>
             <Grid container direction="column">
                 <Grid item>
@@ -53,21 +67,13 @@ const App = (props) => {
                                     setObjectData={setObjectData}
                                     objectData={objectData}
                                     setOpenStatistic={() => setOpenStatistic(!openStatistic)}
+                                    openStatistic={openStatistic}
                                 />
                             </TabPanel>
                         </Grid>
                         <Grid item />
                     </Grid>
                 </Grid>
-                {openStatistic && (
-                    <Grid item container className={classes.statistic}>
-                        <Grid item xs={4} />
-                        <Grid item xs={4}>
-                            <Statistic data={objectData}/>
-                        </Grid>
-                        <Grid item xs={4} />
-                    </Grid>
-                )}
             </Grid>
         </TabContext>
     </Box>
