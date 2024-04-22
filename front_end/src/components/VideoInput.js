@@ -8,7 +8,6 @@ import withStyles from '@mui/styles/withStyles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Statistic from "./Statistic";
 import axios from 'axios';
-import { image } from "@tensorflow/tfjs";
 
 const styles = () => ({
     video: {
