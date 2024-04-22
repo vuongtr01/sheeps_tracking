@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import withStyles from '@mui/styles/withStyles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Statistic from "./Statistic";
+import ChartStatistic from "./charStatistic";
 import axios from 'axios';
 
 const styles = () => ({
@@ -71,10 +72,7 @@ const VideoInput = (props) => {
           }).then((res) => {
             setIsTracking(false);
           }).catch(({ response }) => {
-            response.data.errors.forEach((d) => {
-                console.log(d);
-                setIsTracking(false);
-            });
+            console.log('error upload data');
           });;
     };
 
@@ -90,7 +88,7 @@ const VideoInput = (props) => {
               }).catch((error) => {
                 console.log(error);
               });;
-          }, 5000);
+          }, 2000);
           return () => clearInterval(intervalId);
         }
       }, [isTracking]);
@@ -110,7 +108,7 @@ const VideoInput = (props) => {
                 </Grid>
             </Grid>
             <Grid item>
-                <Statistic data={objectData}/>
+                <ChartStatistic data={objectData}/>
             </Grid>
         </Grid>
         ) : (
