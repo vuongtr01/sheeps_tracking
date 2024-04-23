@@ -33,7 +33,7 @@ const App = (props) => {
                 <Grid container>
                     <Grid item xs={3}>
                         <img
-                            src="/temp_img.jpg"
+                            src="/logo.png"
                             alt="logoimage"
                             width='100'
                             height='50'

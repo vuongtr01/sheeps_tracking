@@ -3,18 +3,42 @@ import cv2
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from distance_calculation import DistanceCalculation
+from sklearn.metrics import pairwise_distances
 
-def resolve_lost_tracks(lost_tracks_prev: dict, lost_tracks_next: dict):
+def resolve_lost_tracks(
+    lost_tracks_prev: dict, lost_tracks_next: dict, metric: str = "hanhattan"
+):
     prev_id_to_next_id = dict()
-    similarity_matrix = cosine_similarity(
-        list(lost_tracks_prev.values()), list(lost_tracks_next.values())
-    )
+
+    if metric == "cosine":
+        similarity_matrix = cosine_similarity(
+            list(lost_tracks_prev.values()), list(lost_tracks_next.values())
+        )
+        threshold = 0.9999
+    elif metric == "manhattan":
+        similarity_matrix = np.negative(
+            pairwise_distances(
+                list(lost_tracks_prev.values()),
+                list(lost_tracks_next.values()),
+                metric="manhattan",
+            )
+        )
+        threshold = -50
+
+    else:
+        raise ValueError("Input must be either 'cosine' or 'manhattan'")
+
     while not np.all(np.isinf(similarity_matrix)):
         max_index = np.argmax(similarity_matrix)
         max_row, max_col = np.unravel_index(max_index, similarity_matrix.shape)
-        prev_id_to_next_id[list(lost_tracks_prev.keys())[max_row]] = list(
-            lost_tracks_next.keys()
-        )[max_col]
+        max_value = similarity_matrix[max_row, max_col]
+
+        if max_value > threshold:
+            prev_id_to_next_id[list(lost_tracks_prev.keys())[max_row]] = list(
+                lost_tracks_next.keys()
+            )[max_col]
+        else:
+            return prev_id_to_next_id
         similarity_matrix[max_row, :] = -np.inf
         similarity_matrix[:, max_col] = -np.inf
 

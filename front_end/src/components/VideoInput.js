@@ -115,10 +115,10 @@ const VideoInput = (props) => {
             <Grid item container direction="column" justifyContent="center" alignItems="center">
                 <Grid item className={classes.imageBody}>
                     <img
-                        src="/temp_img.jpg"
+                        src="/logo.png"
                         alt="logoimage"
                         width='200'
-                        height='200'
+                        height='100'
                     />
                 </Grid>
                 <Grid item>

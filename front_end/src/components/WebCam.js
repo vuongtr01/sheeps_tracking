@@ -142,12 +142,12 @@ const WebCam = (props) => {
         ) : (
             <Grid item container direction="column" justifyContent="center" alignItems="center">
             <Grid item className={classes.imageBody}>
-                <img
-                    src="/temp_img.jpg"
-                    alt="logoimage"
-                    width='200'
-                    height='200'
-                />
+                    <img
+                        src="/logo.png"
+                        alt="logoimage"
+                        width='200'
+                        height='100'
+                    />
             </Grid>
             <Grid item>
                 <Grid item>
